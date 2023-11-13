@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34024.191
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroGames.Data.Abstractions", "RetroGames.Repository.Abstractions\RetroGames.Data.Abstractions.csproj", "{BD0D6E7C-F43D-4B38-A762-0698A7FD2ECD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroGames.Data", "RetroGames.Data\RetroGames.Data.csproj", "{C48B320B-A168-4CAF-ACEF-98EA4313DD59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroGames.Core", "RetroGames.Core\RetroGames.Core.csproj", "{E73291D6-BCF6-4F44-90F7-29C1BAA5DCA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroGames.Core.Abstractions", "RetroGames.Core.Abstractions\RetroGames.Core.Abstractions.csproj", "{8AA99AC7-FFEB-4E52-A291-C1BEBD2EAB98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroGames.WebApi", "RetroGames.WebApi\RetroGames.WebApi.csproj", "{84ED9D64-471C-4088-8097-E0A3D3353DB1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BD0D6E7C-F43D-4B38-A762-0698A7FD2ECD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD0D6E7C-F43D-4B38-A762-0698A7FD2ECD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD0D6E7C-F43D-4B38-A762-0698A7FD2ECD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD0D6E7C-F43D-4B38-A762-0698A7FD2ECD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C48B320B-A168-4CAF-ACEF-98EA4313DD59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C48B320B-A168-4CAF-ACEF-98EA4313DD59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C48B320B-A168-4CAF-ACEF-98EA4313DD59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C48B320B-A168-4CAF-ACEF-98EA4313DD59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E73291D6-BCF6-4F44-90F7-29C1BAA5DCA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E73291D6-BCF6-4F44-90F7-29C1BAA5DCA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E73291D6-BCF6-4F44-90F7-29C1BAA5DCA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E73291D6-BCF6-4F44-90F7-29C1BAA5DCA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AA99AC7-FFEB-4E52-A291-C1BEBD2EAB98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AA99AC7-FFEB-4E52-A291-C1BEBD2EAB98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AA99AC7-FFEB-4E52-A291-C1BEBD2EAB98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AA99AC7-FFEB-4E52-A291-C1BEBD2EAB98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84ED9D64-471C-4088-8097-E0A3D3353DB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84ED9D64-471C-4088-8097-E0A3D3353DB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84ED9D64-471C-4088-8097-E0A3D3353DB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84ED9D64-471C-4088-8097-E0A3D3353DB1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B142977C-DBFA-410D-9BE6-0305D027AE40}
+	EndGlobalSection
+EndGlobal
