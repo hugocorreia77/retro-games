@@ -6,11 +6,11 @@ namespace RetroGames.Core.Services
 {
     public class UserService : IUserService
     {
-        private IRetrogamesRepository _retrogamesRepository;
+        private IUserRepository _usersRepository;
 
-        public UserService(IRetrogamesRepository repository)
+        public UserService(IUserRepository repository)
         {
-            _retrogamesRepository = repository;
+            _usersRepository = repository;
         }
 
         public async Task AddUserAsync(User user)
@@ -30,13 +30,13 @@ namespace RetroGames.Core.Services
                 throw new ArgumentNullException(nameof(user.Password));
             }
 
-            var existingUser = await _retrogamesRepository.GetUserAsync(user.UserId);
+            var existingUser = await _usersRepository.GetUserAsync(user.UserId);
             if (existingUser != null)
             {
                 throw new ArgumentException($"User {user.UserId} already exists!");
             }
 
-            await _retrogamesRepository.AddUserAsync(user);
+            await _usersRepository.AddUserAsync(user);
         }
 
         public async Task<User?> GetUserAsync(Guid id)
@@ -46,7 +46,7 @@ namespace RetroGames.Core.Services
                 throw new ArgumentNullException(nameof(id));
             }
 
-            return await _retrogamesRepository.GetUserAsync(id);
+            return await _usersRepository.GetUserAsync(id);
         }
     }
 }
