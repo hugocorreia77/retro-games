@@ -1,8 +1,8 @@
 ﻿using RetroGames.Core.Abstractions.Models;
 
-namespace RetroGames.Data.Abstractions.Repositories
+namespace RetroGames.Core.Abstractions.Services
 {
-    public interface IRetrogamesRepository
+    public interface IUserService
     {
         Task AddUserAsync(User user);
         Task<User?> GetUserAsync(Guid id);

@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RetroGames.Core.Abstractions\RetroGames.Core.Abstractions.csproj" />
+    <ProjectReference Include="..\RetroGames.Repository.Abstractions\RetroGames.Data.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

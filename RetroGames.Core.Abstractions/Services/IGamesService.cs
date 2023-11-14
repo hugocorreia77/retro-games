@@ -1,7 +1,8 @@
-﻿namespace RetroGames.Core.Abstractions.Services
+﻿using RetroGames.Core.Abstractions.Models;
+
+namespace RetroGames.Core.Abstractions.Services
 {
     public interface IGamesService
     {
-
     }
 }
