@@ -3,13 +3,11 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace RetroGames.Data.Abstractions.Models
 {
-    public class UserEntity
+    public class ProviderEntity
     {
         [BsonId]
         public ObjectId _id { get; set; }
-        public Guid UserId { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
+        public Guid ProviderId { get; set; }
         public string Name { get; set; }
     }
 }

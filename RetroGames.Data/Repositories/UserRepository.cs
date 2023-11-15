@@ -11,11 +11,13 @@ namespace RetroGames.Data.Repositories
     {
         private IMongoClient _mongoClient;
         private MongoDbConfigurations _mongoDbConfigurations;
+        private IMongoDatabase _database;
 
         public UserRepository(IMongoClient mongoClient, IOptions<MongoDbConfigurations> mongoDbConfigurations)
         {
             _mongoClient = mongoClient;
             _mongoDbConfigurations = mongoDbConfigurations.Value;
+            _database = _mongoClient.GetDatabase(_mongoDbConfigurations.Database);
         }
 
         public async Task AddUserAsync(User user)
@@ -28,16 +30,13 @@ namespace RetroGames.Data.Repositories
                 UserId = user.UserId
             };
 
-            var dbRetroGames = _mongoClient.GetDatabase(_mongoDbConfigurations.Database);
-
-            var collection = dbRetroGames.GetCollection<UserEntity>(_mongoDbConfigurations.Collections.User);
+            var collection = _database.GetCollection<UserEntity>(_mongoDbConfigurations.Collections.User);
             await collection.InsertOneAsync(userEntity);
         }
 
         public async Task<User?> GetUserAsync(Guid id)
         {
-            var dbRetroGames = _mongoClient.GetDatabase(_mongoDbConfigurations.Database);
-            var collection = dbRetroGames.GetCollection<UserEntity>(_mongoDbConfigurations.Collections.User);
+            var collection = _database.GetCollection<UserEntity>(_mongoDbConfigurations.Collections.User);
 
             var query = Builders<UserEntity>.Filter.Eq(z => z.UserId, id);
             var entity = await collection.Find(query).FirstOrDefaultAsync();

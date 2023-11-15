@@ -12,12 +12,14 @@ builder.Configuration.GetSection(nameof(MongoDbConfigurations)).Bind(mongoConfig
 builder.Services.Configure<MongoDbConfigurations>(builder.Configuration.GetSection(nameof(MongoDbConfigurations)));
 
 // Add services to the container.
-builder.Services.AddTransient<IMongoClient>(m => new MongoClient(mongoConfig.ConnectionString));
+builder.Services.AddSingleton<IMongoClient>(m => new MongoClient(mongoConfig.ConnectionString));
 
 builder.Services.AddTransient<IRetrogamesRepository, RetrogamesRepository>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IGamesService, GamesService>();
 
-builder.Services.AddControllers(options => options.SuppressAsyncSuffixInActionNames = false);
+builder.Services.AddControllers(options => options.SuppressAsyncSuffixInActionNames = true);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

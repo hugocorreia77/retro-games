@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RetroGames.Core.Abstractions.Models;
 using RetroGames.Core.Abstractions.Services;
-using System.Net.Mime;
 
 namespace RetroGames.WebApi.Controllers
 {
@@ -19,7 +18,6 @@ namespace RetroGames.WebApi.Controllers
         }
 
         [HttpPost]
-        [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddUserAsync(User user)
@@ -40,7 +38,7 @@ namespace RetroGames.WebApi.Controllers
                 return BadRequest(argExc.Message);
             }
 
-            return CreatedAtAction(nameof(GetUserAsync), user.UserId);
+            return new ObjectResult(user) { StatusCode = StatusCodes.Status201Created };
         }
 
         [HttpGet]
