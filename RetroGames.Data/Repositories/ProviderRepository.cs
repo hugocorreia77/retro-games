@@ -7,13 +7,13 @@ using RetroGames.Data.Abstractions.Repositories;
 
 namespace RetroGames.Data.Repositories
 {
-    public class RetrogamesRepository : IRetrogamesRepository
+    public class ProviderRepository : IProviderRepository
     {
         private IMongoClient _mongoClient;
         private MongoDbConfigurations _mongoDbConfigurations;
         private IMongoDatabase _database;
 
-        public RetrogamesRepository(IMongoClient mongoClient, IOptions<MongoDbConfigurations> mongoDbConfigurations)
+        public ProviderRepository(IMongoClient mongoClient, IOptions<MongoDbConfigurations> mongoDbConfigurations)
         {
             _mongoClient = mongoClient;
             _mongoDbConfigurations = mongoDbConfigurations.Value;

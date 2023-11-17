@@ -1,8 +1,8 @@
 ﻿using RetroGames.Core.Abstractions.Models;
 
-namespace RetroGames.Core.Abstractions.Services
+namespace RetroGames.Data.Abstractions.Repositories
 {
-    public interface IGamesService
+    public interface IGameRepository
     {
         Task AddGameAsync(Game game);
         Task<Game?> GetGameAsync(Guid id);

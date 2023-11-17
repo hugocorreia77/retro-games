@@ -5,8 +5,7 @@ namespace RetroGames.Data.Abstractions.Models
 {
     public class UserEntity
     {
-        [BsonId]
-        public ObjectId _id { get; set; }
+        [BsonId, BsonElement("_id")]
         public Guid UserId { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }

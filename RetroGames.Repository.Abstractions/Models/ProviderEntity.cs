@@ -5,8 +5,7 @@ namespace RetroGames.Data.Abstractions.Models
 {
     public class ProviderEntity
     {
-        [BsonId]
-        public ObjectId _id { get; set; }
+        [BsonId, BsonElement("_id")]
         public Guid ProviderId { get; set; }
         public string Name { get; set; }
     }

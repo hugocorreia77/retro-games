@@ -11,6 +11,7 @@
     {
         public string User { get; set; }
         public string Provider { get; set; }
+        public string Game { get; set; }
         public string Comment { get; set; }
 
     }

@@ -14,8 +14,11 @@ builder.Services.Configure<MongoDbConfigurations>(builder.Configuration.GetSecti
 // Add services to the container.
 builder.Services.AddSingleton<IMongoClient>(m => new MongoClient(mongoConfig.ConnectionString));
 
-builder.Services.AddTransient<IRetrogamesRepository, RetrogamesRepository>();
+builder.Services.AddTransient<IProviderRepository, ProviderRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IGameRepository, GameRepository>();
+
+builder.Services.AddTransient<IProviderService, ProviderService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IGamesService, GamesService>();
 

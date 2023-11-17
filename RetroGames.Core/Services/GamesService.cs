@@ -1,50 +1,47 @@
 ﻿using RetroGames.Core.Abstractions.Models;
 using RetroGames.Core.Abstractions.Services;
 using RetroGames.Data.Abstractions.Repositories;
-using System.Data.SqlTypes;
 
 namespace RetroGames.Core.Services
 {
     public class GamesService : IGamesService
     {
-        private IRetrogamesRepository _retrogamesRepository;
+        private readonly IGameRepository _gameRepository;
+        private readonly IProviderRepository _providerRepository;
 
-        public GamesService(IRetrogamesRepository repository) 
+        public GamesService(IGameRepository gameRepository, IProviderRepository providerRepository) 
         { 
-            _retrogamesRepository = repository;
+            _gameRepository = gameRepository;
+            _providerRepository = providerRepository;
         }
 
-        public async Task AddProvider(Provider provider)
+        public async Task AddGameAsync(Game game)
         {
-            if(provider == null)
+            if(game == null) throw new ArgumentNullException(nameof(game));
+            if(string.IsNullOrEmpty(game.Name)) throw new ArgumentNullException(nameof(game.Name));
+            if(string.IsNullOrEmpty(game.Link)) throw new ArgumentNullException(nameof(game.Link));
+            if(game.ProviderId == default) throw new ArgumentException($"{nameof(game.ProviderId)} not accepted");
+
+            var provider = _providerRepository.GetProvider(game.ProviderId);
+            if(provider is null)
             {
-                throw new ArgumentNullException(nameof(provider));
+                throw new ArgumentException($"Provider {game.ProviderId} not found.");
             }
 
-            if (string.IsNullOrEmpty(provider.Name))
-            {
-                throw new ArgumentNullException(nameof(provider.Name));
-            }
-
-            if (provider.ProviderId == default)
-            {
-                throw new ArgumentNullException(nameof(provider.ProviderId));
-            }
-
-            var exists = await _retrogamesRepository.GetProvider(provider.ProviderId);
-
-            if (exists != null)
-            {
-                throw new ArgumentException("Already exists!", nameof(provider.ProviderId));
-            }
-
-            await _retrogamesRepository.AddProvider(provider);
+            await _gameRepository.AddGameAsync(game);
         }
-        
-        public Task<Provider?> GetProvider(Guid id)
-            => _retrogamesRepository.GetProvider(id);
-        
-        public Task<IEnumerable<Provider>> GetProviders()
-            => _retrogamesRepository.GetProviders();
+
+        public Task<IEnumerable<Game>> GetGamesAsync()
+            => _gameRepository.GetGamesAsync();
+
+        public async Task<Game?> GetGameAsync(Guid id)
+        {
+            if(id == default)
+            {
+                throw new Exception(nameof(id));
+            }
+
+            return await _gameRepository.GetGameAsync(id);
+        }
     }
 }

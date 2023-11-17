@@ -1,8 +1,8 @@
-﻿using RetroGames.Core.Abstractions.Models;
+﻿using RetroGames.Core.Abstractions.Models;  
 
-namespace RetroGames.Data.Abstractions.Repositories
+namespace RetroGames.Core.Abstractions.Services
 {
-    public interface IRetrogamesRepository
+    public interface IProviderService
     {
         Task AddProvider(Provider provider);
         Task<Provider?> GetProvider(Guid id);

@@ -9,19 +9,19 @@ namespace RetroGames.WebApi.Controllers
     public class ProvidersController : ControllerBase
     {
         private readonly ILogger<ProvidersController> _logger;
-        private readonly IGamesService _gamesService;
+        private readonly IProviderService _providerService;
 
-        public ProvidersController(ILogger<ProvidersController> logger, IGamesService gamesService)
+        public ProvidersController(ILogger<ProvidersController> logger, IProviderService providerService)
         {
             _logger = logger;
-            _gamesService = gamesService;
+            _providerService = providerService;
         }
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAsync()
         {
-            return Ok(await _gamesService.GetProviders());
+            return Ok(await _providerService.GetProviders());
         }
 
         [HttpGet("{id}")]
@@ -29,7 +29,7 @@ namespace RetroGames.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByIdAsync(Guid id)
         {
-            var provider = await _gamesService.GetProvider(id);
+            var provider = await _providerService.GetProvider(id);
             return provider is null ? NotFound() : Ok(provider);
         }
 
@@ -40,7 +40,7 @@ namespace RetroGames.WebApi.Controllers
         {
             try
             {
-                await _gamesService.AddProvider(provider);
+                await _providerService.AddProvider(provider);
             }
             catch (ArgumentNullException argEx)
             {
