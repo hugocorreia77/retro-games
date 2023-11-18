@@ -23,7 +23,7 @@ namespace RetroGames.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddUserAsync(UserInput userInput)
         {
-            _logger.LogInformation("Adding user");
+            _logger.LogInformation("Adding user...");
             var user = new User
             {
                 UserId = Guid.NewGuid(),
@@ -46,6 +46,7 @@ namespace RetroGames.WebApi.Controllers
                 return BadRequest(argExc.Message);
             }
 
+            _logger.LogInformation("User {user} successfully added!", user.Name);
             return new ObjectResult(user) { StatusCode = StatusCodes.Status201Created };
         }
 

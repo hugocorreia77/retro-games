@@ -26,9 +26,17 @@ namespace RetroGames.WebApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AddGameAsync(Game game)
+        public async Task<IActionResult> AddGameAsync(GameInput gameInput)
         {
-            _logger.LogInformation("Adding game");
+            _logger.LogInformation("Adding game...");
+            
+            var game = new Game
+            {
+                GameId = Guid.NewGuid(),
+                Link = gameInput.Link,
+                Name = gameInput.Name,
+                ProviderId = gameInput.ProviderId
+            };
 
             try
             {
@@ -45,6 +53,7 @@ namespace RetroGames.WebApi.Controllers
                 return BadRequest(argEx.Message);
             }
 
+            _logger.LogInformation("Game {game} successfully added!", game.Name);
             return new ObjectResult(game) { StatusCode = StatusCodes.Status201Created };
         }
 

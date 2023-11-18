@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RetroGames.Core.Abstractions.Models;
+using RetroGames.Core.Abstractions.Models.Input;
 using RetroGames.Core.Abstractions.Services;
 
 namespace RetroGames.WebApi.Controllers
@@ -36,8 +37,16 @@ namespace RetroGames.WebApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateAsync(Provider provider)
+        public async Task<IActionResult> CreateAsync(ProviderInput providerInput)
         {
+            _logger.LogInformation("Adding provider...");
+
+            var provider = new Provider
+            {
+                ProviderId = Guid.NewGuid(),
+                Name = providerInput.Name
+            };
+
             try
             {
                 await _providerService.AddProvider(provider);
@@ -52,6 +61,8 @@ namespace RetroGames.WebApi.Controllers
                 _logger.LogError("Provider {provider} already exists!", argumEx.ParamName);
                 return BadRequest($"{argumEx.Message} {argumEx.ParamName}");
             }
+
+            _logger.LogInformation("Provider {provider} successfully added!", provider.Name);
 
             return new ObjectResult(provider) { StatusCode = StatusCodes.Status201Created };
         }
