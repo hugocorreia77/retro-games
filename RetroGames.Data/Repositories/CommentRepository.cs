@@ -6,25 +6,25 @@ using RetroGames.Data.Abstractions.Repositories;
 
 namespace RetroGames.Data.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class CommentRepository : ICommentRepository
     {
         private IMongoClient _mongoClient;
         private MongoDbConfigurations _mongoDbConfigurations;
         private IMongoDatabase _database;
-        private IMongoCollection<User> _users;
+        private IMongoCollection<Comment> _comments;
 
-        public UserRepository(IMongoClient mongoClient, IOptions<MongoDbConfigurations> mongoDbConfigurations)
+        public CommentRepository(IMongoClient mongoClient, IOptions<MongoDbConfigurations> mongoDbConfigurations)
         {
             _mongoClient = mongoClient;
             _mongoDbConfigurations = mongoDbConfigurations.Value;
             _database = _mongoClient.GetDatabase(_mongoDbConfigurations.Database);
-            _users = _database.GetCollection<User>(_mongoDbConfigurations.Collections.User);
+            _comments = _database.GetCollection<Comment>(_mongoDbConfigurations.Collections.Comment);
         }
 
-        public Task AddUserAsync(User user)
-            => _users.InsertOneAsync(user);
-
-        public async Task<User?> GetUserAsync(Guid id)
-            => (await _users.FindAsync(k => k.UserId == id)).FirstOrDefault();
+        public Task AddCommentAsync(Comment comment)
+            => _comments.InsertOneAsync(comment);
+        
+        public async Task<IEnumerable<Comment>> GetCommentsAsync(Guid gameId)
+            =>  (await _comments.FindAsync(z => z.GameId == gameId)).ToEnumerable();
     }
 }

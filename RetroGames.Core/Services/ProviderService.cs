@@ -31,20 +31,20 @@ namespace RetroGames.Core.Services
                 throw new ArgumentNullException(nameof(provider.ProviderId));
             }
 
-            var exists = await _retrogamesRepository.GetProvider(provider.ProviderId);
+            var exists = await _retrogamesRepository.GetProviderAsync(provider.ProviderId);
 
             if (exists != null)
             {
-                throw new ArgumentException("Already exists!", nameof(provider.ProviderId));
+                throw new ArgumentException("Provider already exists!", nameof(provider.ProviderId));
             }
 
-            await _retrogamesRepository.AddProvider(provider);
+            await _retrogamesRepository.AddProviderAsync(provider);
         }
 
         public Task<Provider?> GetProvider(Guid id)
-            => _retrogamesRepository.GetProvider(id);
+            => _retrogamesRepository.GetProviderAsync(id);
 
         public Task<IEnumerable<Provider>> GetProviders()
-            => _retrogamesRepository.GetProviders();
+            => _retrogamesRepository.GetProvidersAsync();
     }
 }

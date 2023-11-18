@@ -2,12 +2,12 @@
 
 namespace RetroGames.Core.Abstractions.Models
 {
-    public class Game
+    public class Comment
     {
         [BsonId, BsonElement("_id")]
+        public Guid Id { get; set; }
+        public Guid UserId { get; set; }
         public Guid GameId { get; set; }
-        public string Name { get; set; }
-        public string Link { get; set; }
-        public Guid ProviderId { get; set; }
+        public string Text { get; set; }
     }
 }

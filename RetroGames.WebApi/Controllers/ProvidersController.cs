@@ -44,13 +44,13 @@ namespace RetroGames.WebApi.Controllers
             }
             catch (ArgumentNullException argEx)
             {
-                _logger.LogWarning("Argument {argument} can not be null!", argEx.ParamName);
+                _logger.LogError("Argument {argument} can not be null!", argEx.ParamName);
                 return BadRequest(argEx.Message);
             }
             catch (ArgumentException argumEx)
             {
-                _logger.LogWarning("Provider already exists!", argumEx.ParamName);
-                return BadRequest(argumEx.Message);
+                _logger.LogError("Provider {provider} already exists!", argumEx.ParamName);
+                return BadRequest($"{argumEx.Message} {argumEx.ParamName}");
             }
 
             return new ObjectResult(provider) { StatusCode = StatusCodes.Status201Created };

@@ -22,10 +22,16 @@ namespace RetroGames.Core.Services
             if(string.IsNullOrEmpty(game.Link)) throw new ArgumentNullException(nameof(game.Link));
             if(game.ProviderId == default) throw new ArgumentException($"{nameof(game.ProviderId)} not accepted");
 
-            var provider = _providerRepository.GetProvider(game.ProviderId);
+            var provider = await _providerRepository.GetProviderAsync(game.ProviderId);
             if(provider is null)
             {
                 throw new ArgumentException($"Provider {game.ProviderId} not found.");
+            }
+
+            var exists = await _gameRepository.GetGameAsync(game.GameId);
+            if (exists != null)
+            {
+                throw new ArgumentException($"Game already exists!", nameof(game.GameId));
             }
 
             await _gameRepository.AddGameAsync(game);

@@ -17,10 +17,12 @@ builder.Services.AddSingleton<IMongoClient>(m => new MongoClient(mongoConfig.Con
 builder.Services.AddTransient<IProviderRepository, ProviderRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IGameRepository, GameRepository>();
+builder.Services.AddTransient<ICommentRepository, CommentRepository>();
 
 builder.Services.AddTransient<IProviderService, ProviderService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IGamesService, GamesService>();
+builder.Services.AddTransient<ICommentsService, CommentsService>();
 
 builder.Services.AddControllers(options => options.SuppressAsyncSuffixInActionNames = true);
 

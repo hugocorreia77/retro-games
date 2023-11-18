@@ -2,7 +2,6 @@
 using MongoDB.Driver;
 using RetroGames.Core.Abstractions.Configurations;
 using RetroGames.Core.Abstractions.Models;
-using RetroGames.Data.Abstractions.Models;
 using RetroGames.Data.Abstractions.Repositories;
 
 namespace RetroGames.Data.Repositories
@@ -12,44 +11,24 @@ namespace RetroGames.Data.Repositories
         private IMongoClient _mongoClient;
         private MongoDbConfigurations _mongoDbConfigurations;
         private IMongoDatabase _database;
+        private IMongoCollection<Provider> _providers;
 
         public ProviderRepository(IMongoClient mongoClient, IOptions<MongoDbConfigurations> mongoDbConfigurations)
         {
             _mongoClient = mongoClient;
             _mongoDbConfigurations = mongoDbConfigurations.Value;
             _database = _mongoClient.GetDatabase(_mongoDbConfigurations.Database);
+            _providers = _database.GetCollection<Provider>(_mongoDbConfigurations.Collections.Provider);
         }
 
-        public async Task AddProvider(Provider provider)
-        {
-            var providerEntity = new ProviderEntity
-            {
-                Name = provider.Name,
-                ProviderId = provider.ProviderId
-            };
+        public Task AddProviderAsync(Provider provider)
+            => _providers.InsertOneAsync(provider);
+        
+        public async Task<Provider?> GetProviderAsync(Guid id)
+            => (await _providers.FindAsync(z => z.ProviderId == id)).FirstOrDefault();
 
-            var collection = _database.GetCollection<ProviderEntity>(_mongoDbConfigurations.Collections.Provider);
-            await collection.InsertOneAsync(providerEntity);
-        }
-
-        public async Task<Provider?> GetProvider(Guid id)
-        {
-            var collection = _database.GetCollection<ProviderEntity>(_mongoDbConfigurations.Collections.Provider);
-            var query = Builders<ProviderEntity>.Filter.Eq(z => z.ProviderId, id);
-            var entity = await collection.Find(query).FirstOrDefaultAsync();
-
-            return entity is null ? null : new Provider
-            {
-                Name = entity.Name,
-                ProviderId = entity.ProviderId,
-            };
-        }
-
-        public async Task<IEnumerable<Provider>> GetProviders()
-        {
-            var collection = _database.GetCollection<ProviderEntity>(_mongoDbConfigurations.Collections.Provider);
-            var entities = await collection.Find(_ => true).ToListAsync();
-            return entities.Select(n => new Provider { Name = n.Name, ProviderId = n.ProviderId });
-        }
+        public async Task<IEnumerable<Provider>> GetProvidersAsync()
+            => (await _providers.FindAsync(_ => true)).ToEnumerable();
+        
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RetroGames.Core.Abstractions.Models;
+using RetroGames.Core.Abstractions.Models.Input;
 using RetroGames.Core.Abstractions.Services;
 
 namespace RetroGames.WebApi.Controllers
@@ -20,9 +21,16 @@ namespace RetroGames.WebApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AddUserAsync(User user)
+        public async Task<IActionResult> AddUserAsync(UserInput userInput)
         {
             _logger.LogInformation("Adding user");
+            var user = new User
+            {
+                UserId = Guid.NewGuid(),
+                Name = userInput.Name,
+                Password = userInput.Password,
+                Username = userInput.Username
+            };
 
             try
             {
@@ -30,7 +38,7 @@ namespace RetroGames.WebApi.Controllers
             }
             catch (ArgumentNullException argNullEx)
             {
-                _logger.LogWarning("Argument {argument} can not be null.", argNullEx.ParamName);
+                _logger.LogError("Argument {argument} can not be null.", argNullEx.ParamName);
                 return BadRequest($"Argument {argNullEx.ParamName} can not be null.");
             }
             catch (ArgumentException argExc)
@@ -50,7 +58,7 @@ namespace RetroGames.WebApi.Controllers
 
             if(user is null)
             {
-                _logger.LogWarning("User not found exception! Id: {id}", guid);
+                _logger.LogError("User not found exception! Id: {id}", guid);
                 return NotFound();
             }
 
