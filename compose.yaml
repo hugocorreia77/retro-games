@@ -1,0 +1,15 @@
+services:
+  webapi:
+    image: retro-games-image
+    ports:
+      - 127.0.0.1:5010:80
+
+  mongodb:
+    image: mongo
+    volumes:
+      - mongo-volume:/var/lib/mongo
+    ports:
+      - 127.0.0.1:27018:27017
+
+volumes:
+  mongo-volume:
