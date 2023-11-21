@@ -1,8 +1,22 @@
+networks:
+  retro-network:
+    external: true
+
 services:
   webapi:
     image: retro-games-image
     ports:
       - 127.0.0.1:5010:80
+    environment:
+      MongoDbConfigurations__ConnectionString: mongodb://172.20.0.2:27017
+      MongoDbConfigurations__Database: retrogames
+      MongoDbConfigurations__Collections__user: user
+      MongoDbConfigurations__Collections__provider: provider
+      MongoDbConfigurations__Collections__game: game
+      MongoDbConfigurations__Collections__comment: comment
+    networks:
+      retro-network:
+        ipv4_address: 172.20.0.3
 
   mongodb:
     image: mongo
@@ -10,6 +24,9 @@ services:
       - mongo-volume:/var/lib/mongo
     ports:
       - 127.0.0.1:27018:27017
+    networks:
+      retro-network:
+        ipv4_address: 172.20.0.2
 
 volumes:
   mongo-volume:
